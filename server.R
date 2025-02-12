@@ -84,12 +84,12 @@ server = function(input, output, session) {
 		updateSelectInput(session = session, inputId = "groups", choices = unselectedColumns(), selected = selected)
 	})
 	
-	observeEvent(input$measure, {
-		updateTextInput(session = session, inputId = "xLab", value = input$measure)
+	observeEvent(input$groups, {
+		updateTextInput(session = session, inputId = "xLab", value = input$groups)
 	})
 	
-	observeEvent(input$groups, {
-		updateTextInput(session = session, inputId = "yLab", value = input$groups)
+	observeEvent(input$measure, {
+		updateTextInput(session = session, inputId = "yLab", value = input$measure)
 	})
 	
 	output$isDataNull = reactive({
