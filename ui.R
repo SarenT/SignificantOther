@@ -50,7 +50,7 @@ ui = page_sidebar(
 		
 		style = "background: #ff9999"
 	),
-	title = "Significant Other ♥",
+	title = "Significant Other ♥ (minimal effort for a silly app)",
 	window_title = "Significant Other >---♥--->",
 	card(
 		plotOutput(outputId = "plot"),
