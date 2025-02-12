@@ -15,19 +15,20 @@ ui = page_sidebar(
     "))
 	),
 	sidebar = sidebar(
-		p("Either XLSX or CSV files. At least one column should be groups and one column should be values (measure)."),
 		accordion(
 			id = "dataSelection",
+			p("Calculate significance for your significant other with love...", style = "font-weight: bold; margin: 1em;"),
 			accordion_panel(title = "p-hacking", 
 											p("Play with these parameters to get the best p-value to prove your love to your significant other!"),
 											sliderInput("sample_n", "Number of samples", min = 5, max = 1000, value = 10, step = 5), 
 											sliderInput("sd", "standardDeviation", min = 0.1, max = 100, value = 1, step = 0.1),
 											numericInput("groupMeanMe", "Mean Me", value = "10"),
-											numericInput("groupMeanSO", "Mean SO", value = "11"),
+											numericInput("groupMeanSO", "Mean SO", value = "15"),
 											checkboxInput("notyoume", "It's not you, it's me", value = FALSE),
 											checkboxInput("notmeyou", "It's not me, it's you", value = FALSE)
 											),
 			accordion_panel(title = "Bring your own data",
+											p("Either XLSX or CSV files. At least one column should be groups and one column should be values (measure)."),
 											fileInput("dataFile", label = "Data file")
 											),
 			multiple = FALSE
