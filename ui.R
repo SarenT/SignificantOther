@@ -7,13 +7,31 @@ library(shinyBS)
 ui = page_sidebar(
 	tags$head(
 		tags$style(HTML("
-      .navbar { background-color: #ff7777 !important; } 
+      .navbar { background-color: #ff5555 !important; } 
       .main { background-color: #ffdddd !important; }
+      .accordion-header { background-color: #ff7777 !important; }
+      .accordion-body { background-color: #ff9999 !important; }
+      .accordion-button { background-color: #ff7777 !important; } 
     "))
 	),
 	sidebar = sidebar(
 		p("Either XLSX or CSV files. At least one column should be groups and one column should be values (measure)."),
-		fileInput("dataFile", label = "Data file"), 
+		accordion(
+			id = "dataSelection",
+			accordion_panel(title = "p-hacking", 
+											p("Play with these parameters to get the best p-value to prove your love to your significant other!"),
+											sliderInput("sample_n", "Number of samples", min = 5, max = 1000, value = 10, step = 5), 
+											sliderInput("sd", "standardDeviation", min = 0.1, max = 100, value = 1, step = 0.1),
+											numericInput("groupMeanMe", "Mean Me", value = "10"),
+											numericInput("groupMeanSO", "Mean SO", value = "11"),
+											checkboxInput("notyoume", "It's not you, it's me", value = FALSE),
+											checkboxInput("notmeyou", "It's not me, it's you", value = FALSE)
+											),
+			accordion_panel(title = "Bring your own data",
+											fileInput("dataFile", label = "Data file")
+											),
+			multiple = FALSE
+		),
 		
 		selectInput("measure", "Measure", choices = list()),
 		conditionalPanel("input.measure != 'none'", selectInput("groups", "Groups", choices = list())),
@@ -28,6 +46,7 @@ ui = page_sidebar(
 	 	selectInput("color", "Colors", 
 							 choices = setNames(names(wes_palettes), names(wes_palettes)), 
 							 selected = "FantasticFox1"), 
+		
 		style = "background: #ff9999"
 	),
 	title = "Significant Other ♥",

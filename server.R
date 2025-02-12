@@ -10,9 +10,9 @@ library(lubridate)
 
 server = function(input, output, session) {
 	defaultData = reactive({
-		n = 10000
-		me = rnorm(n, 1, 1)
-		sign_other = rnorm(n, 1.1, 1)
+		n = input$sample_n
+		me = rnorm(n, input$groupMeanMe * ifelse(input$notyoume, 0.5, 1), input$sd)
+		sign_other = rnorm(n, input$groupMeanSO * ifelse(input$notmeyou, 0.5, 1), input$sd)
 		me_name = "me"
 		sign_other_name = "significant other"
 		data = tibble(who = rep(c(me_name, sign_other_name), each = n), value = c(me, sign_other))
@@ -111,14 +111,17 @@ server = function(input, output, session) {
 		title = input$title
 		subtitle = input$subtitle
 		
+		comparisons = combn(unique(data()[[x]]), 2, simplify = F)
+		
 		plt = ggplot(data(), aes(!!sym(x), !!sym(y), colour = !!sym(x), fill = !!sym(x))) + 
 			geom_boxplot(alpha = 0.5) + 
 			scale_fill_manual(values = wes_palette(n = nGroups(), name = input$color)) + 
 			scale_color_manual(values = wes_palette(n = nGroups(), name = input$color)) + 
 			labs(title = input$title, subtitle = input$subtitle) + ylab(input$yLab) + xlab(input$xLab) + 
 			theme_classic() + stat_compare_means(label = "p.signif", method = input$test, 
-																					 ref.group = ".all.", symnum.args = list(cutpoints = c(0.0, 0.01, 0.05), 
-																					 																				symbols = c("♥♥♥♥♥", ""))) + 
+																					 comparisons = comparisons, 
+																					 symnum.args = list(cutpoints = c(0.0, 0.001, 0.01, 0.05, Inf), 
+																					 									 symbols = c("♥♥♥", "♥♥", "♥", "☹"))) + 
 			theme(plot.title = element_text(hjust = 0.5), 
 						plot.subtitle = element_text(hjust = 0.5, face = "italic", colour = "darkgrey"))
 		
