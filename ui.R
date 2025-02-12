@@ -47,7 +47,8 @@ ui = page_sidebar(
 	 	selectInput("color", "Colors", 
 							 choices = setNames(names(wes_palettes), names(wes_palettes)), 
 							 selected = "FantasticFox1"), 
-		
+		p("Fun silly project for Valentine's day, with minimal effort but some Easter eggs here and there..."), 
+		p("Made with data science and ♥ - Saren Tasciyan February 2025"),
 		style = "background: #ff9999"
 	),
 	title = "Significant Other ♥ (minimal effort for a silly app)",
@@ -57,5 +58,6 @@ ui = page_sidebar(
 		style = "background: #ffbbbb"
 	),
 	DT::DTOutput("data")
+	
 	
 )
